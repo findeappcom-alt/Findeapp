@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FINDE — Investor Pitch Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F4EF;
+    --bone: #EDE9E1;
+    --ink: #1A1714;
+    --muted: #7A756D;
+    --accent: #C8A96E;
+    --accent-dark: #8B6F3E;
+    --warm-white: #FDFBF8;
+    --border: rgba(26,23,20,0.1);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
+    opacity: 0.5;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(247,244,239,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 22px; font-weight: 500;
+    letter-spacing: 4px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px; font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  .nav-contact {
+    font-size: 12px; font-weight: 500;
+    color: var(--accent-dark);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
+  }
+
+  /* Sections */
+  section { position: relative; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    background: var(--ink);
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--serif);
+    font-size: clamp(120px, 22vw, 320px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: 20px;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 400;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 300;
+    line-height: 0.95;
+    color: var(--warm-white);
+    letter-spacing: -1px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-bottom {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    opacity: 0;
+    animation: fadeUp 1s 0.8s forwards;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    max-width: 400px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .hero-stat {
+    text-align: right;
+  }
+
+  .hero-stat-num {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .hero-stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 32px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s 1.5s forwards;
+  }
+
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, transparent, var(--accent));
+    animation: scrollPulse 2s infinite;
+  }
+
+  .scroll-text {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* ── PROBLEM ── */
+  .problem {
+    padding: 120px 48px;
+    background: var(--warm-white);
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 64px;
+    max-width: 700px;
+  }
+
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .problem-card {
+    background: var(--warm-white);
+    padding: 40px 36px;
+  }
+
+  .problem-num {
+    font-family: var(--serif);
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--bone);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .problem-heading {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .problem-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ── SOLUTION ── */
+  .solution {
+    padding: 120px 48px;
+    background: var(--ink);
+    color: var(--warm-white);
+  }
+
+  .solution .section-title { color: var(--warm-white); }
+  .solution .section-label { color: var(--accent); }
+
+  .solution-statement {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 300;
+    line-height: 1.4;
+    max-width: 900px;
+    margin-bottom: 80px;
+    color: rgba(255,255,255,0.85);
+    border-left: 2px solid var(--accent);
+    padding-left: 32px;
+  }
+
+  .solution-statement em { color: var(--accent); font-style: italic; }
+
+  .three-sides {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .side-card {
+    border: 0.5px solid rgba(255,255,255,0.1);
+    padding: 36px 28px;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .side-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .side-icon {
+    font-size: 28px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .side-title {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: var(--warm-white);
+  }
+
+  .side-role {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .side-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ── MARKET ── */
+  .market {
+    padding: 120px 48px;
+    background: var(--cream);
+  }
+
+  .market-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-bottom: 80px;
+  }
+
+  .market-num-card {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 32px;
+  }
+
+  .market-num {
+    font-family: var(--serif);
+    font-size: clamp(42px, 6vw, 80px);
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .market-num span {
+    color: var(--accent);
+  }
+
+  .market-num-label {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .market-insight {
+    background: var(--ink);
+    color: var(--warm-white);
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .insight-label {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--accent);
+  }
+
+  .insight-text {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.9;
+    font-weight: 300;
+  }
+
+  /* ── PRODUCT ── */
+  .product {
+    padding: 120px 48px;
+    background: var(--warm-white);
+  }
+
+  .features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    counter-reset: features;
+  }
+
+  .feature-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    padding: 48px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .feature-row:last-child { border-bottom: none; }
+
+  .feature-num {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--bone);
+    line-height: 1;
+  }
+
+  .feature-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .feature-title em { font-style: italic; color: var(--accent); }
+
+  .feature-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .feature-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    border: 0.5px solid var(--accent);
+    padding: 4px 12px;
+    margin-top: 16px;
+  }
+
+  /* ── COMPETITION ── */
+  .competition {
+    padding: 120px 48px;
+    background: var(--cream);
+  }
+
+  .comp-table-wrap {
+    overflow-x: auto;
+    margin-top: 64px;
+  }
+
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .comp-table th {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    padding: 12px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comp-table td {
+    padding: 16px 20px;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .comp-table td:first-child {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .comp-table tr.finde-row td {
+    background: var(--ink);
+    color: var(--warm-white);
+  }
+
+  .comp-table tr.finde-row td:first-child {
+    color: var(--accent);
+    font-family: var(--serif);
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+
+  .tick { color: #7CB87A; font-size: 14px; }
+  .cross { color: rgba(122,117,109,0.4); font-size: 14px; }
+
+  /* ── BUSINESS MODEL ── */
+  .model {
+    padding: 120px 48px;
+    background: var(--ink);
+    color: var(--warm-white);
+  }
+
+  .model .section-title { color: var(--warm-white); }
+
+  .revenue-streams {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 80px;
+  }
+
+  .rev-card {
+    border: 0.5px solid rgba(255,255,255,0.1);
+    padding: 36px 28px;
+  }
+
+  .rev-pct {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .rev-title {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 16px;
+  }
+
+  .rev-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .model-projection {
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    padding-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 48px;
+  }
+
+  .proj-year {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .proj-rev {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--warm-white);
+    margin-bottom: 8px;
+  }
+
+  .proj-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── TRACTION ── */
+  .traction {
+    padding: 120px 48px;
+    background: var(--warm-white);
+  }
+
+  .roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 64px;
+  }
+
+  .roadmap-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 48px;
+    padding: 48px 0;
+    border-bottom: 0.5px solid var(--border);
+    align-items: start;
+  }
+
+  .roadmap-item:last-child { border-bottom: none; }
+
+  .roadmap-phase {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--accent-dark);
+    letter-spacing: 1px;
+  }
+
+  .roadmap-period {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  .roadmap-title {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .roadmap-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 600px;
+  }
+
+  .roadmap-target {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--accent-dark);
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+    letter-spacing: 1px;
+  }
+
+  /* ── FOUNDER ── */
+  .founder {
+    padding: 120px 48px;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .founder-name {
+    font-family: var(--serif);
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    margin-bottom: 32px;
+  }
+
+  .founder-name em {
+    display: block;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .founder-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .founder-bio {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.9;
+    font-weight: 300;
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+
+  .founder-vision {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink);
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+    line-height: 1.5;
+    max-width: 480px;
+  }
+
+  .founder-right {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .founder-stat-card {
+    background: var(--ink);
+    padding: 32px 36px;
+    color: var(--warm-white);
+  }
+
+  .founder-stat-num {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .founder-stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── CONTACT / CTA ── */
+  .cta {
+    min-height: 80vh;
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg {
+    position: absolute;
+    font-family: var(--serif);
+    font-size: clamp(80px, 16vw, 220px);
+    font-weight: 300;
+    color: rgba(200,169,110,0.05);
+    letter-spacing: 10px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .cta-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .cta-title {
+    font-family: var(--serif);
+    font-size: clamp(42px, 7vw, 96px);
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.05;
+    margin-bottom: 32px;
+    letter-spacing: -1px;
+  }
+
+  .cta-title em { font-style: italic; color: var(--accent); }
+
+  .cta-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.4);
+    max-width: 480px;
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 56px;
+  }
+
+  .cta-email {
+    font-family: var(--serif);
+    font-size: 28px;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
+    letter-spacing: 1px;
+    transition: opacity 0.2s;
+  }
+
+  .cta-email:hover { opacity: 0.7; }
+
+  .cta-footer {
+    position: absolute;
+    bottom: 32px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 48px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.6); opacity: 0.4; }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── DIVIDER ── */
+  .gold-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    margin: 24px 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero, .problem, .solution, .market, .product,
+    .competition, .model, .traction, .cta { padding-left: 24px; padding-right: 24px; }
+    .problem-grid, .three-sides, .revenue-streams,
+    .market-numbers, .model-projection { grid-template-columns: 1fr; }
+    .feature-row { grid-template-columns: 48px 1fr; }
+    .feature-row > :last-child { grid-column: 2; }
+    .founder { grid-template-columns: 1fr; gap: 48px; }
+    .roadmap-item { grid-template-columns: 1fr; gap: 16px; }
+    .market-insight { grid-template-columns: 1fr; }
+    .cta-footer { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">FINDE</a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#model">Model</a></li>
+    <li><a href="#founder">Founder</a></li>
+  </ul>
+  <a class="nav-contact" href="#contact">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">FINDE</div>
+  <div class="hero-eyebrow">Confidential investor presentation · 2025</div>
+  <h1 class="hero-title">
+    The world's first<br>
+    personal shopping<br>
+    <em>marketplace.</em>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">Connecting clients globally with verified personal shoppers, stylists, and vintage stores — through a single trusted platform.</p>
+    <div class="hero-stat">
+      <div class="hero-stat-num">$1.5T</div>
+      <div class="hero-stat-label">Global luxury market</div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span class="scroll-text">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="section-label reveal">01 — The Problem</div>
+  <h2 class="section-title reveal">The personal shopping industry<br>is <em>broken</em> and unorganised.</h2>
+  <div class="problem-grid">
+    <div class="problem-card reveal">
+      <div class="problem-num">01</div>
+      <h3 class="problem-heading">No dedicated platform</h3>
+      <p class="problem-text">Thousands of personal shoppers, stylists and vintage hunters advertise themselves on Instagram and TikTok — with no booking system, no payment protection, no trust layer. Clients wire money to strangers and hope for the best.</p>
+    </div>
+    <div class="problem-card reveal reveal-delay-1">
+      <div class="problem-num">02</div>
+      <h3 class="problem-heading">Access is everything</h3>
+      <p class="problem-text">A woman in Warsaw sees the new Chanel Blazy collection go viral on TikTok. It's not available online. The Paris boutique doesn't ship internationally. She has no way to get it — unless she knows someone who knows someone.</p>
+    </div>
+    <div class="problem-card reveal reveal-delay-2">
+      <div class="problem-num">03</div>
+      <h3 class="problem-heading">Millions of items hidden</h3>
+      <p class="problem-text">Hundreds of thousands of vintage stores worldwide never upload their inventory online. Their best pieces sit unseen in cities across Europe while buyers search in vain on Vestiaire and Depop for exactly those pieces.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution" id="solution">
+  <div class="section-label reveal">02 — The Solution</div>
+  <div class="solution-statement reveal">
+    FINDE is a three-sided marketplace connecting <em>clients</em> who want hard-to-find fashion with <em>verified shoppers</em> who have boutique access, and <em>vintage stores</em> whose inventory has never been seen online.
+  </div>
+  <div class="three-sides">
+    <div class="side-card reveal">
+      <span class="side-icon">👜</span>
+      <div class="side-role">Side one</div>
+      <h3 class="side-title">Clients</h3>
+      <p class="side-text">Post a sourcing request with a photo, budget and sizes. Browse a live trend feed of what shoppers are seeing in stores right now. Pay only when the item is found and approved — full escrow protection.</p>
+    </div>
+    <div class="side-card reveal reveal-delay-1">
+      <span class="side-icon">✈️</span>
+      <div class="side-role">Side two</div>
+      <h3 class="side-title">Personal shoppers</h3>
+      <p class="side-text">Create a verified profile with boutique access, brand specialities and locations covered. Post videos and photos from inside stores. Receive matched client requests. Earn a sourcing fee on every completed job.</p>
+    </div>
+    <div class="side-card reveal reveal-delay-2">
+      <span class="side-icon">🏪</span>
+      <div class="side-role">Side three</div>
+      <h3 class="side-title">Vintage stores</h3>
+      <p class="side-text">Snap and upload stock on a phone. AI identifies the item automatically. When a client requests something matching your inventory — you're notified instantly. No e-commerce setup required. Just respond and ship.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET -->
+<section class="market" id="market">
+  <div class="section-label reveal">03 — The Market</div>
+  <h2 class="section-title reveal">A multi-billion dollar industry<br>with <em>zero</em> dedicated platforms.</h2>
+  <div class="market-numbers">
+    <div class="market-num-card reveal">
+      <div class="market-num">$<span>1.5</span>T</div>
+      <p class="market-num-label">Global luxury goods market in 2024. The pool FINDE operates inside — and grows with it every year.</p>
+    </div>
+    <div class="market-num-card reveal reveal-delay-1">
+      <div class="market-num">$<span>50</span>B</div>
+      <p class="market-num-label">Pre-loved and vintage luxury resale market. Expected to double by 2030. FINDE is built for both new and vintage in one platform.</p>
+    </div>
+    <div class="market-num-card reveal reveal-delay-2">
+      <div class="market-num"><span>4.2</span>B</div>
+      <p class="market-num-label">TikTok views on #personalshopper. The demand already exists — organised nowhere. FINDE captures it.</p>
+    </div>
+  </div>
+  <div class="market-insight reveal">
+    <div class="insight-label">0 platforms<br>doing this.</div>
+    <p class="insight-text">Every existing player — Sourced By, The Floorr, Vêtir, In-Seam — serves the professional supply side only. None of them have built an open consumer marketplace. None combine boutique sourcing with vintage. None have escrow protection for strangers transacting for the first time. FINDE is the first to do all of it.</p>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section class="product" id="product">
+  <div class="section-label reveal">04 — The Product</div>
+  <h2 class="section-title reveal">Built around the moment<br>everything <em>clicks.</em></h2>
+  <div class="features-list">
+    <div class="feature-row reveal">
+      <div class="feature-num">01</div>
+      <div>
+        <h3 class="feature-title">Snap & <em>source</em></h3>
+        <p class="feature-desc">A client uploads any photo — screenshot, TikTok still, magazine page. FINDE's image AI identifies the brand, item and era instantly, matches it against open shopper offers and vintage store inventory simultaneously, and pre-fills the sourcing request automatically.</p>
+        <span class="feature-tag">Image recognition AI</span>
+      </div>
+      <div>
+        <p class="feature-desc" style="margin-top:8px;">The result: posting a sourcing request takes under 60 seconds. The client's sizes, budget and preferences are auto-filled from their profile. Shoppers see a perfectly briefed job, not a vague DM.</p>
+      </div>
+    </div>
+    <div class="feature-row reveal">
+      <div class="feature-num">02</div>
+      <div>
+        <h3 class="feature-title">Photo approval<br><em>before</em> payment</h3>
+        <p class="feature-desc">The shopper finds the item, photographs it in the boutique — front, back, hardware, serial number, receipt. The client approves the exact piece before any money moves. Only on approval is the card charged. Funds go into FINDE's escrow — not the shopper — until delivery is confirmed.</p>
+        <span class="feature-tag">Stripe Connect escrow</span>
+      </div>
+      <div>
+        <p class="feature-desc" style="margin-top:8px;">This is the trust engine that makes FINDE possible. Clients never pay for something they haven't seen. Shoppers never ship without confirmed payment. Both parties are protected by design, not by trust.</p>
+      </div>
+    </div>
+    <div class="feature-row reveal">
+      <div class="feature-num">03</div>
+      <div>
+        <h3 class="feature-title">The live<br><em>trend feed</em></h3>
+        <p class="feature-desc">Shoppers post videos and photos from inside boutiques, fashion fairs, and vintage stores in real time. Clients browse a TikTok-style feed of what's actually available in stores right now — not just what brands choose to put online. Every post has a one-tap "Request this" button.</p>
+        <span class="feature-tag">Content-to-commerce pipeline</span>
+      </div>
+      <div>
+        <p class="feature-desc" style="margin-top:8px;">This is the acquisition engine. Most clients won't come to FINDE knowing what they want — they'll come because they saw something beautiful and realised they could actually get it. The feed creates demand that the marketplace immediately captures.</p>
+      </div>
+    </div>
+    <div class="feature-row reveal">
+      <div class="feature-num">04</div>
+      <div>
+        <h3 class="feature-title">ID verified<br><em>shoppers</em></h3>
+        <p class="feature-desc">Every shopper on FINDE is identity verified via government ID, selfie match, and linked bank account before their first job. Their boutique access, brand specialities, and covered locations are listed on their profile. Clients can see SA relationships, member client status, and sourcing track record.</p>
+        <span class="feature-tag">Stripe Identity verification</span>
+      </div>
+      <div>
+        <p class="feature-desc" style="margin-top:8px;">"Every shopper on FINDE is identity-verified" is a sentence that appears on the homepage and is worth a great deal in a market where people currently wire money to Instagram strangers with zero recourse.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITION -->
+<section class="competition" id="competition">
+  <div class="section-label reveal">05 — Competition</div>
+  <h2 class="section-title reveal">Everyone solved half<br>the problem. <em>We solve it all.</em></h2>
+  <div class="comp-table-wrap reveal">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Open marketplace</th>
+          <th>Boutique sourcing</th>
+          <th>Vintage + new</th>
+          <th>Escrow payment</th>
+          <th>Image AI</th>
+          <th>Trend feed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sourced By</td>
+          <td><span class="cross">—</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+        </tr>
+        <tr>
+          <td>The Floorr</td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+        </tr>
+        <tr>
+          <td>Vêtir</td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+        </tr>
+        <tr>
+          <td>Wishi</td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+        </tr>
+        <tr>
+          <td>Vestiaire / Depop</td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">—</span></td>
+          <td><span class="cross">—</span></td>
+        </tr>
+        <tr class="finde-row">
+          <td>FINDE</td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="model" id="model">
+  <div class="section-label reveal">06 — Business Model</div>
+  <h2 class="section-title reveal" style="color:var(--warm-white);">Three revenue streams.<br><em>All aligned</em> with value delivered.</h2>
+  <div class="revenue-streams">
+    <div class="rev-card reveal">
+      <div class="rev-pct">12%</div>
+      <div class="rev-title">Transaction commission</div>
+      <p class="rev-desc">Charged on every completed transaction. Split roughly 8% from shopper's sourcing fee and 4% service fee from client. The core revenue engine — only charged when both parties are satisfied. A €4,000 Chanel sourcing job generates €480 in commission from one transaction.</p>
+    </div>
+    <div class="rev-card reveal reveal-delay-1">
+      <div class="rev-pct">€19</div>
+      <div class="rev-title">Shopper Pro · per month</div>
+      <p class="rev-desc">Shoppers pay monthly for priority placement in the discovery feed, advanced analytics showing which items are trending, and the verified Pro badge unlocking higher-value client requests. Predictable monthly recurring revenue independent of transaction volume.</p>
+    </div>
+    <div class="rev-card reveal reveal-delay-2">
+      <div class="rev-pct">€9</div>
+      <div class="rev-title">Client Premium · per month</div>
+      <p class="rev-desc">Clients pay for wishlist price alerts, priority shopper matching, duty-free airport mode — alerting shoppers travelling through CDG, LHR and DXB — and unlimited saved shopper favourites. Drives retention and deepens platform dependency.</p>
+    </div>
+  </div>
+  <div class="model-projection">
+    <div class="reveal">
+      <div class="proj-year">Year 1</div>
+      <div class="proj-rev">€60K</div>
+      <p class="proj-desc">500 monthly transactions · €900 avg value · 200 Pro shoppers · 300 Premium clients. Paris and Milan launch. Proving the model works.</p>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="proj-year">Year 2</div>
+      <div class="proj-rev">€960K</div>
+      <p class="proj-desc">8M GMV · Full European expansion · Vintage vertical live · Image AI in production · Seed round raised.</p>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="proj-year">Year 5</div>
+      <div class="proj-rev">€36M+</div>
+      <p class="proj-desc">€300M+ GMV · 10,000 verified shoppers · 50 cities · Boutique partnerships with top luxury houses · Series A or acquisition target.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRACTION / ROADMAP -->
+<section class="traction" id="traction">
+  <div class="section-label reveal">07 — Launch Plan</div>
+  <h2 class="section-title reveal">How we go from<br><em>zero to proof</em> in 12 months.</h2>
+  <div class="roadmap">
+    <div class="roadmap-item reveal">
+      <div>
+        <div class="roadmap-phase">Phase 1</div>
+        <div class="roadmap-period">Months 1–3</div>
+      </div>
+      <div>
+        <h3 class="roadmap-title">Build the core loop</h3>
+        <p class="roadmap-text">Build the MVP on Bubble.io — client profiles with measurements, shopper profiles with boutique access, the sourcing request flow, photo approval, Stripe escrow, and ID verification. Recruit 50 hand-picked verified shoppers in Paris and Milan personally. Run 5 real transactions end to end. Find what breaks. Fix it.</p>
+        <span class="roadmap-target">Target: First 5 real transactions completed</span>
+      </div>
+    </div>
+    <div class="roadmap-item reveal">
+      <div>
+        <div class="roadmap-phase">Phase 2</div>
+        <div class="roadmap-period">Months 4–6</div>
+      </div>
+      <div>
+        <h3 class="roadmap-title">Launch publicly in Europe</h3>
+        <p class="roadmap-text">Open to clients across Poland, UK, Germany, Nordics and UAE. Launch the trend feed — shoppers post from inside boutiques and vintage fairs. Add vintage stores as the third user type. First press coverage. 500 completed transactions is the milestone that proves the model to investors.</p>
+        <span class="roadmap-target">Target: 500 transactions · €450K GMV</span>
+      </div>
+    </div>
+    <div class="roadmap-item reveal">
+      <div>
+        <div class="roadmap-phase">Phase 3</div>
+        <div class="roadmap-period">Months 7–12</div>
+      </div>
+      <div>
+        <h3 class="roadmap-title">Raise seed round · scale supply</h3>
+        <p class="roadmap-text">With 500 transactions and real revenue, raise a seed round to fund operations and marketing. Expand shopper recruitment globally — London, NYC, Tokyo, Dubai. Launch image recognition AI properly. Begin conversations with luxury boutiques about verified sourcing partnerships. Build native iOS and Android apps.</p>
+        <span class="roadmap-target">Target: Seed round · 2,000 verified shoppers · 20 cities</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder" id="founder">
+  <div>
+    <div class="section-label reveal">08 — The Founder</div>
+    <div class="founder-name reveal">
+      Yago<em>da.</em>
+    </div>
+    <div class="founder-title reveal">Founder & CEO · FINDE · Warsaw, Poland</div>
+    <p class="founder-bio reveal">
+      The personal shopping industry is a multi-billion dollar market where transactions still happen via Instagram DM, payment via bank transfer to strangers, and trust via gut instinct. FINDE was built from a simple observation: the demand is enormous, the supply is scattered, and nobody has built the infrastructure to connect them safely.
+    </p>
+    <blockquote class="founder-vision reveal">
+      "Every competitor chose to serve the professionals. I'm building for everyone else — the millions of people who want access to this world but don't know anyone inside it."
+    </blockquote>
+  </div>
+  <div class="founder-right">
+    <div class="founder-stat-card reveal">
+      <div class="founder-stat-num">$0</div>
+      <div class="founder-stat-label">Dedicated consumer platforms in this space globally</div>
+    </div>
+    <div class="founder-stat-card reveal reveal-delay-1">
+      <div class="founder-stat-num">Now</div>
+      <div class="founder-stat-label">Looking for co-founder, first shoppers & seed investors</div>
+    </div>
+    <div class="founder-stat-card reveal reveal-delay-2">
+      <div class="founder-stat-num">findeapp.eu</div>
+      <div class="founder-stat-label">Domain secured · Building MVP · Europe first</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="cta-bg">FINDE</div>
+  <div class="cta-label reveal">Get involved</div>
+  <h2 class="cta-title reveal">
+    Let's build<br><em>FINDE</em> together.
+  </h2>
+  <p class="cta-sub reveal">
+    Looking for co-founders, early investors, and the first 50 verified shoppers in Paris and Milan. If you're a personal shopper, stylist, or see the opportunity — let's talk.
+  </p>
+  <a class="cta-email reveal" href="mailto:hello@findeapp.eu">hello@findeapp.eu</a>
+  <div class="cta-footer">
+    <span>© 2025 FINDE · Confidential</span>
+    <span>Yagoda · Founder & CEO</span>
+    <span>findeapp.eu</span>
+  </div>
+</section>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
